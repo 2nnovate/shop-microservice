@@ -6,4 +6,4 @@ COPY . .
 
 RUN npm install
 
-CMD ["npm", "run", "start", "app-1"]
+CMD ["npm", "run", "serve:api-gateway"]
