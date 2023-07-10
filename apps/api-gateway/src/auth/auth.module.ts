@@ -10,7 +10,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         name: 'AUTH_MICROSERVICE',
         transport: Transport.KAFKA,
         options: {
-          // TODO: docker-compose로 카프카 컨테이너 띄운 뒤 작성하기
+          client: {
+            clientId: 'auth',
+            brokers: ['localhost:9092'],
+          },
+          producerOnlyMode: true,
+          consumer: {
+            groupId: 'auth-consumer',
+          },
         },
       },
     ]),
