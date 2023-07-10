@@ -1,23 +1,17 @@
-import { Controller, Get, Post, Body, Param, ValidationPipe } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, Post, Body, ValidationPipe, Inject } from '@nestjs/common';
 import { CreateUserDto } from '@shop-microservice/context/dto';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @Inject('AUTH_MICROSERVICE') private readonly authClient: ClientKafka
+  ) {}
 
   @Post('/sign-up')
-  create(@Body(ValidationPipe) createUserhDto: CreateUserDto) {
-    return this.authService.create(createUserhDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+    console.log('createUserDto', createUserDto);
+    
+    this.authClient.emit('creat_user', JSON.stringify(createUserDto));
   }
 }
