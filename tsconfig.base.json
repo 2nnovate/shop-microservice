@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shop-microservice/context/dto": ["libs/context/src/lib/dto/index.ts"]
+      "@shop-microservice/context/dto": ["libs/context/src/lib/dto/index.ts"],
+      "@shop-microservice/context/entitis": ["libs/context/src/lib/entities/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
