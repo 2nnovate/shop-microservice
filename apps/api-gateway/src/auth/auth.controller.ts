@@ -12,6 +12,6 @@ export class AuthController {
   create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     console.log('createUserDto', createUserDto);
     
-    this.authClient.emit('creat_user', JSON.stringify(createUserDto));
+    this.authClient.emit('create_user', JSON.stringify(createUserDto));
   }
 }
