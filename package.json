@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve:api-gateway": "nx serve api-gateway"
+    "serve:api-gateway": "nx serve api-gateway",
+    "serve:auth-service": "nx serve auth-microservice"
   },
   "private": true,
   "dependencies": {

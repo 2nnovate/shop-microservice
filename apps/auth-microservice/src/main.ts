@@ -10,7 +10,7 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          brokers: ['localhost:9092'],
+          brokers: ['host.docker.internal:9092'],
         },
         consumer: {
           groupId: 'auth-consumer',
@@ -18,6 +18,8 @@ async function bootstrap() {
       },
     },
   );
+  console.log('auth microservice bootstrap!');
+  
   await app.listen();
 }
 

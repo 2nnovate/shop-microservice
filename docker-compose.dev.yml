@@ -13,6 +13,15 @@ services:
       - zookeeper
       - kafka
 
+  auth-service:
+    container_name: auth-service
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run serve:auth-service
+    depends_on:
+      - api-gateway
+
   zookeeper:
     image: bitnami/zookeeper:3.8
     container_name: zookeeper
