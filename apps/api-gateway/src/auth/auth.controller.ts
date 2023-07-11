@@ -10,7 +10,7 @@ export class AuthController {
 
   @Post('/sign-up')
   create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
-    console.log('createUserDto', createUserDto);
+    console.log('[API gateway] request body: ', createUserDto);
     
     this.authClient.emit('create_user', JSON.stringify(createUserDto));
   }

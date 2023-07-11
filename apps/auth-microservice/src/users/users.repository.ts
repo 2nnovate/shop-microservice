@@ -6,7 +6,7 @@ export class UsersRepository {
     private readonly users: User[] = [];
 
     save(user: User) {
-        console.log(user);
+        console.log('[auth service] UserRepository.save', user);
         
         this.users.push({ ...user, id: this.users.length + 1 });
     }

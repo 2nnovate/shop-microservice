@@ -18,7 +18,6 @@ async function bootstrap() {
       },
     },
   );
-  console.log('auth microservice bootstrap!');
   
   await app.listen();
 }
