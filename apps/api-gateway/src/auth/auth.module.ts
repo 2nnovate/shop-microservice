@@ -15,9 +15,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
             brokers: ['host.docker.internal:9092'],
           },
           producerOnlyMode: true,
-          consumer: {
-            groupId: 'auth-consumer',
-          },
         },
       },
     ]),

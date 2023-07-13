@@ -10,7 +10,6 @@ export class AppController {
 
   @EventPattern('create_user')
   handleUserCreate(@Payload(ValidationPipe) data: CreateUserDto) {
-    // 연결된 이후에 핸들러가 동작!
     console.log('[auth service] event handler, payload: ', data);
     
     this.appService.createUser(data);
