@@ -22,6 +22,15 @@ services:
     depends_on:
       - api-gateway
 
+  email-service:
+    container_name: email-service
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run serve:email-service
+    depends_on:
+      - api-gateway
+
   zookeeper:
     image: bitnami/zookeeper:3.8
     container_name: zookeeper

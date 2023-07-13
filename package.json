@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "serve:api-gateway": "nx serve api-gateway",
-    "serve:auth-service": "nx serve auth-microservice"
+    "serve:auth-service": "nx serve auth-microservice",
+    "serve:email-service": "nx serve email-microservice"
   },
   "private": true,
   "dependencies": {
