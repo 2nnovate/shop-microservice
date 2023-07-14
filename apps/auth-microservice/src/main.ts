@@ -14,7 +14,10 @@ async function bootstrap() {
         },
         consumer: {
           groupId: 'auth-consumer',
-        }
+        },
+        subscribe: {
+          fromBeginning: true,
+        },
       },
     },
   );
