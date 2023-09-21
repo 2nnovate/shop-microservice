@@ -11,7 +11,9 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          brokers: ['host.docker.internal:9092'],
+          brokers: [
+            process.env.SERVICE_MODE === 'production' ? 'email-service.shop-microservice.local:9092' : 'host.docker.internal:9092'
+          ],
         },
         consumer: {
           groupId: 'email-consumer',
@@ -22,7 +24,7 @@ async function bootstrap() {
       },
     },
   );
-  
+
   await app.listen();
 }
 

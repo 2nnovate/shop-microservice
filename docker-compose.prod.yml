@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  api-gateway:
+    container_name: api-gateway
+    image: 225047281420.dkr.ecr.ap-northeast-2.amazonaws.com/shop-microservice-ecs:7
+    command: npm run serve:api-gateway
+    environment:
+      - PORT=80
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 2048M
+    ports:
+      - 80:80
+    depends_on:
+      - zookeeper
+      - kafka
+
+  auth-service:
+    container_name: auth-service
+    image: 225047281420.dkr.ecr.ap-northeast-2.amazonaws.com/shop-microservice-ecs:7
+    command: npm run serve:auth-service
+    environment:
+      - SERVICE_MODE=production
+    deploy:
+      x-aws-autoscaling:
+        min: 1
+        max: 3
+        cpu: 75
+    depends_on:
+      - api-gateway
+
+  email-service:
+    container_name: email-service
+    image: 225047281420.dkr.ecr.ap-northeast-2.amazonaws.com/shop-microservice-ecs:7
+    command: npm run serve:email-service
+    environment:
+      - SERVICE_MODE=production
+    depends_on:
+      - api-gateway
+
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    container_name: zookeeper
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2048M
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka:3.4
+    container_name: kafka
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2048M
+    ports:
+      - "9092:9092"
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ENABLE_KRAFT=no
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+    depends_on:
+      - zookeeper
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+    depends_on:
+      - zookeeper
+      - kafka

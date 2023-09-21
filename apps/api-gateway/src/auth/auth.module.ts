@@ -12,7 +12,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           client: {
             clientId: 'auth',
-            brokers: ['host.docker.internal:9092'],
+            brokers: [
+              process.env.SERVICE_MODE === 'production' ? 'api-gateway.shop-microservice.local:9092' : 'host.docker.internal:9092'
+            ],
           },
           producerOnlyMode: true,
         },
